@@ -21,7 +21,7 @@ export default function BeTeacherSection() {
         <motion.div
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={fadeUp}
           className="lg:sticky lg:top-24"
         >
