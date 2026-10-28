@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id                String   @id @default(cuid())
+  fullName          String
+  phone             String
+  email             String?
+  subjects          String
+  levels            String
+  educationStage    String
+  city              String
+  yearsExperience   Int      @default(0)
+  salaryMin         Int?
+  salaryMax         Int?
+  cvUrl             String?
+  availability      String   @default("Immediate")
+  verified          Boolean  @default(false)
+  createdAt         DateTime @default(now())
+}
+
+model School {
+  id            String    @id @default(cuid())
+  name          String
+  type          String
+  city          String
+  contactPerson String?
+  phone         String
+  email         String?
+  verified      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  vacancies     Vacancy[]
+}
+
+model Vacancy {
+  id              String   @id @default(cuid())
+  schoolId        String
+  school          School   @relation(fields: [schoolId], references: [id])
+  subject         String
+  level           String
+  educationStage  String
+  location        String
+  salaryMin       Int?
+  salaryMax       Int?
+  requirements    String?
+  status          String   @default("Open")
+  createdAt       DateTime @default(now())
+}
+
+model CollectedRecord {
+  id          String   @id @default(cuid())
+  source      String
+  kind        String
+  name        String
+  subject     String?
+  city        String?
+  phone       String?
+  email       String?
+  status      String   @default("Pending")
+  scrapedAt   DateTime @default(now())
+}
